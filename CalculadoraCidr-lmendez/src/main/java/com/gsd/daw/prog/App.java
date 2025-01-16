@@ -37,7 +37,7 @@ public class App {
         System.out.println("Subnetting:" + subnetting);
     }
 
-    private static boolean tieneComillas(String texto) {
+    public static boolean tieneComillas(String texto) {
         for (int i = 0; i < texto.length(); i++) {
             char c = texto.charAt(i);
             if (c == '\'' || c == '\"') {
@@ -78,7 +78,7 @@ public class App {
         return true;
     }
 
-    private static boolean esIntValido(String candidato) {
+    public static boolean esIntValido(String candidato) {
         try {
             Integer.parseInt(candidato);
         } catch (Exception e) {
@@ -87,7 +87,7 @@ public class App {
         return true;
     }
 
-    private static String ClaseIp(byte[] bytesIp) {
+    public static String ClaseIp(byte[] bytesIp) {
         int primerOcteto = bytesIp[0] & 0xFF;
         if (primerOcteto <= 127)
             return "A";
@@ -100,7 +100,7 @@ public class App {
         return "E";
     }
 
-    private static boolean calcularSubnetting(int bits, String claseIp) {
+    public static boolean calcularSubnetting(int bits, String claseIp) {
         if (bits < 0 || bits > 32) {
             System.out.println("Error: El valor de la máscara no es válido para calcular el subnetting.");
             return false;
@@ -119,13 +119,12 @@ public class App {
                 break;
             case "D":
             case "E":
-                return bits != 32;
+                return bits == 32;
             default:
                 return false;
         }
-        return bits < mascaraPorDefecto;
+        return bits >= mascaraPorDefecto;
     }
+    
+    
 }
-
-
-
