@@ -1,22 +1,53 @@
 package com.gsd.daw.prog;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.gsd.daw.prog.api.UnApi;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-@TestMethodOrder(MethodOrderer.DisplayName.class)
+import org.junit.jupiter.api.Test;
+
 public class AppTest {
-	@Test
-	@DisplayName("Test de Cobertura1")
-	public void testDeCobertura1() {
-		// este test no hace nada, simplemente da un 100% de cobertura en los reportes.
-		new App();
-		new UnApi();
-		App.main(null);
-		assertTrue(true);
-	}
+
+    @Test
+    public void testValidarIpYClaseIp() {
+        byte[] bytesIp = new byte[4];
+        assertTrue(App.validarIp("192.168.1.1", bytesIp));
+        assertEquals("C", App.ClaseIp(bytesIp));
+    }
+
+    @Test
+    public void testComillasYEsIntValido() {
+        assertTrue(App.tieneComillas("\"123\""));
+        assertTrue(App.esIntValido("123"));
+    }
+
+    @Test
+    public void testSinComillasYNoEsValido() {
+        assertFalse(App.tieneComillas("123abc"));
+        assertFalse(App.esIntValido("123abc"));
+    }
+    
+    @Test
+    public void testValidarSalidaIpValida() {
+        // Redirigir System.out
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+
+        // Llamar al main con argumentos válidos
+        String[] args = {"192.168.1.1", "24"};
+        App.main(args);
+
+        // Restaurar System.out
+        System.setOut(System.out);
+
+        // Verificar salida
+        String salida = output.toString();
+        assertTrue(salida.contains("192.168.1.1/24"));
+        assertTrue(salida.contains("C")); // Clase de IP
+        assertTrue(salida.contains("Subnetting:true"));
+    }
 }
+
