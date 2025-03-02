@@ -5,9 +5,10 @@ public class Matriz {
     public static boolean isMatrizValida(int[][] m) {
         if (m == null || m.length == 0) 
             return false; // Comprueba que la matriz no sea nula ni vacía
+        int numColumnas = m[0].length; // Suponemos que la primera fila define el número de columnas
         for (int i = 0; i < m.length; i++) {
-            if (m[i] == null || m[i].length != m[0].length) 
-                return false; // Verifica que cada fila tenga el mismo número de columnas
+            if (m[i] == null || m[i].length != numColumnas) 
+                return false; // Verifica que cada fila no sea nula y tenga el mismo número de columnas
         }
         return true;
     }
@@ -113,8 +114,5 @@ public class Matriz {
         return posicion;
     }
 }
-                                                                                                         
-	
-
 
 	
