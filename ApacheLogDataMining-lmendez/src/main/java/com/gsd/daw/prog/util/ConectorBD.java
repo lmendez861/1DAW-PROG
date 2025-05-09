@@ -9,17 +9,25 @@ import java.sql.DriverManager;
 public class ConectorBD {
 
     /**
-     * Establece una conexión a una base de datos Oracle local usando las credenciales proporcionadas.
+     * Establece una conexión a una base de datos Oracle usando las credenciales proporcionadas.
+     * Soporta tanto SID como nombres de servicio para mayor compatibilidad.
      * 
-     * @param ipBD Dirección IP o nombre del host donde está el servidor Oracle (ej. localhost o 192.168.1.100).
-     * @param nombreBD SID o nombre del servicio de la base de datos (ej. orcl o xe).
-     * @param usuarioBD Nombre del usuario de la base de datos (ej. system).
-     * @param contraseñaBD Contraseña del usuario de la base de datos.
+     * @param ipBD Dirección IP o nombre del host del servidor Oracle (ej. 127.0.0.1).
+     * @param nombreBD SID o nombre del servicio de la base de datos (ej. XEPDB1).
+     * @param usuarioBD Nombre del usuario de la base de datos (ej. lantolin).
+     * @param contraseñaBD Contraseña del usuario de la base de datos (ej. changeme).
      * @return Objeto Connection para interactuar con la base de datos.
      * @throws Exception Si falla la conexión (credenciales incorrectas, servidor no disponible, etc.).
      */
     public static Connection obtenerConexion(String ipBD, String nombreBD, String usuarioBD, String contraseñaBD) throws Exception {
-        String url = "jdbc:oracle:thin:@" + ipBD + ":1521:" + nombreBD; // Formato de la URL de conexión a Oracle.
-        return DriverManager.getConnection(url, usuarioBD, contraseñaBD);
+        // Intenta con formato SID
+        String urlSID = "jdbc:oracle:thin:@" + ipBD + ":1521:" + nombreBD;
+        try {
+            return DriverManager.getConnection(urlSID, usuarioBD, contraseñaBD);
+        } catch (Exception e) {
+            // Si falla con SID, intenta con nombre de servicio
+            String urlService = "jdbc:oracle:thin:@//" + ipBD + ":1521/" + nombreBD;
+            return DriverManager.getConnection(urlService, usuarioBD, contraseñaBD);
+        }
     }
 }

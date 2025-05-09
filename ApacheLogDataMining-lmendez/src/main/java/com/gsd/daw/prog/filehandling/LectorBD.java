@@ -17,7 +17,7 @@ public class LectorBD {
      * @throws Exception Si hay un error al consultar la base de datos.
      */
     public static String[][] leerLogsDesdeBD(Connection conexion) throws Exception {
-        java.util.List<String[]> registros = new java.util.ArrayList<>();
+        java.util.ArrayList<String[]> registros = new java.util.ArrayList<>();
         String sql = "SELECT IP, TIMESTAMP, REQUEST, RESULT, BYTES, UA FROM APACHE_LOG_TBL";
         try (Statement stmt = conexion.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

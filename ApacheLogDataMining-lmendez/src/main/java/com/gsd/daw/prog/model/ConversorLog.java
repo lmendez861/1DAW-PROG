@@ -15,11 +15,11 @@ public class ConversorLog {
         EntradaLog[] logs = new EntradaLog[datos.length];
         for (int i = 0; i < datos.length; i++) {
             String ip = datos[i][0];
-            String timestamp = datos[i][3].substring(1) + " " + datos[i][4].substring(0, datos[i][4].length() - 1);
-            String request = datos[i][5].substring(1);
-            String result = datos[i][6];
-            int bytes = datos[i][7].equals("-") ? 0 : Integer.parseInt(datos[i][7]);
-            String userAgent = datos[i].length > 9 ? datos[i][9].substring(1, datos[i][9].length() - 1) : "";
+            String timestamp = datos[i][1];
+            String request = datos[i][2];
+            String result = datos[i][3];
+            int bytes = datos[i][4].equals("-") ? 0 : Integer.parseInt(datos[i][4]);
+            String userAgent = datos[i][5];
             logs[i] = new EntradaLog(ip, timestamp, request, result, bytes, userAgent);
         }
         return logs;

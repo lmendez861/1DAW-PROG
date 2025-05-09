@@ -42,7 +42,7 @@ public class EntradaLog {
     public void guardarEnBD(Connection conexion) throws Exception {
         String sql = "INSERT INTO APACHE_LOG_TBL (IP, TIMESTAMP, REQUEST, RESULT, BYTES, UA) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            stmt.setString(1, ip); // Se establecen los valores de los parámetros.
+            stmt.setString(1, ip);
             stmt.setString(2, timestamp);
             stmt.setString(3, request);
             stmt.setString(4, result);
@@ -53,12 +53,8 @@ public class EntradaLog {
     }
 
     /** @return Dirección IP del log. */
-    public String obtenerIP() { 
-        return ip;
-    }
+    public String obtenerIP() { return ip; }
 
     /** @return Código de estado del log. */
-    public String obtenerResultado() { 
-        return result; 
-    }
+    public String obtenerResultado() { return result; }
 }
