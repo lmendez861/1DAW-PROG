@@ -13,6 +13,6 @@ public class App {
 	 *            no se espera ningún parámetro.
 	 */
 	public static void main(String[] args) {
-		System.out.println("Hola soy un proyecto Upstream");
+		System.out.println("Upstream");
 	}
 }
